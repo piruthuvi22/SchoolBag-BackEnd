@@ -5,6 +5,7 @@ var ObjectId = require("mongodb").ObjectId;
 const router = express.Router();
 const Quiz = require("../models/quizModel");
 const Institute = require("../models/instituteModel");
+const upload = require("../multer-engine/engine");
 
 router.get("/", async (req, res) => {
   try {
@@ -62,28 +63,54 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", upload.single("myFile"), async (req, res) => {
+  req.fields ? console.log(req.fields) : console.log(req.body);
+
   //Getting the answers and Making it as arrays
   let answersReceived = req.body.answers;
   let answersToAdd = answersReceived.split(",,");
 
-  console.log("received");
-  //Create the Question object
-  let newQuestion = {
-    Question: req.body.question,
-    Answers: answersToAdd,
-    CorrectAnswer: req.body.correctAnswer,
-  };
-  try {
-    const i = Quiz.updateOne(
-      { _id: req.params.id }, // wrap in ObjectID },
-      { $push: { Questions: newQuestion } },
-      (done) => {
-        res.status(200).send(newQuestion);
-      }
-    );
-  } catch (err) {
-    console.log(err);
+  if (req.file !== undefined) {
+    console.log(req.file);
+    const path = req.file.path;
+    //Create the Question object
+    let newQuestion = {
+      Question: req.body.question,
+      Answers: answersToAdd,
+      CorrectAnswer: req.body.correctAnswer,
+      Path: path,
+    };
+
+    try {
+      const i = Quiz.updateOne(
+        { _id: req.params.id }, // wrap in ObjectID },
+        { $push: { Questions: newQuestion } },
+        (done) => {
+          res.status(200).json("saved with file");
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    //Create the Question object
+    let newQuestion = {
+      Question: req.body.question,
+      Answers: answersToAdd,
+      CorrectAnswer: req.body.correctAnswer,
+    };
+
+    try {
+      const i = Quiz.updateOne(
+        { _id: req.params.id }, // wrap in ObjectID },
+        { $push: { Questions: newQuestion } },
+        (done) => {
+          res.status(200).json("saved without file");
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 

@@ -33,6 +33,7 @@ const quizSchema = new mongoose.Schema({
       CorrectAnswer: {
         type: Number,
       },
+      Path: { type: String },
     },
   ],
 });
