@@ -1,5 +1,9 @@
 const { response } = require("express");
 const express = require("express");
+const fs = require("fs");
+const { promisify } = require("util");
+
+const unlinkAsync = promisify(fs.unlink);
 var ObjectId = require("mongodb").ObjectId;
 
 const router = express.Router();
@@ -114,6 +118,15 @@ router.patch("/:id", upload.single("myFile"), async (req, res) => {
   }
 });
 
+// Route for Delete the quiz-images
+router.post("/delete-img/", async (req, res) => {
+  // path like > "uploads\\img-1617997789932.jpg"
+  let path = req.body.path;
+  await unlinkAsync("uploads\\" + req.body.path);
+  res.send(path);
+});
+
+// Route for hit like
 router.post("/hit/:id", async (req, res) => {
   let _id = req.params.id;
   const hit = await Quiz.findById({ _id }).select({
