@@ -68,8 +68,6 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.patch("/:id", upload.single("myFile"), async (req, res) => {
-  req.fields ? console.log(req.fields) : console.log(req.body);
-
   //Getting the answers and Making it as arrays
   let answersReceived = req.body.answers;
   let answersToAdd = answersReceived.split(",,");
