@@ -46,6 +46,7 @@ router.post("/", async (req, res) => {
     );
     res.status(200).json("Saved & updated");
   } catch (err) {
+    console.log("ERROR" + err);
     res.json(err);
   }
 });
@@ -120,6 +121,7 @@ router.patch("/:id", upload.single("myFile"), async (req, res) => {
 router.post("/delete-img/", async (req, res) => {
   // path like > "uploads\\img-1617997789932.jpg"
   let path = req.body.path;
+  console.log(path);
   await unlinkAsync("uploads\\" + req.body.path);
   res.send(path);
 });
