@@ -6,7 +6,8 @@ const Institute = require("../models/instituteModel");
 router.get("/", async (req, res) => {
   try {
     const institute = await Institute.find();
-    res.json(institute);
+    console.log(institute);
+    res.json(institute); //available,_id,name,address,city,phoneNo,
   } catch (err) {
     res.send("Error " + err);
   }

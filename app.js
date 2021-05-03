@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const mongoConnectionString = "mongodb://localhost:27017/schoolBag";
+const mongoConnectionString = process.env.DB_URI;
 // const mongoConnectionString =
 //   "mongodb+srv://john:john@cluster0.a0fgx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const bodyparser = require("body-parser");
