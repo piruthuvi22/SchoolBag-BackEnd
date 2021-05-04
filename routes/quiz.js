@@ -26,7 +26,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/list", async (req, res) => {
-  let obj;
+  let obj,
+    data = [];
   try {
     const quiz = await Quiz.find().select({ Questions: 0 });
     if (quiz.length > 0) {
@@ -37,9 +38,10 @@ router.get("/list", async (req, res) => {
           ).select({ name: 1, _id: 0 });
           obj = Object.assign({}, quiz[n].toObject());
           obj["instituteName"] = instituteName["name"];
+          data.push(obj);
         }
-        console.log(obj);
-        res.json(obj);
+        console.log(data);
+        res.json(data);
       } catch (err) {
         res.send("Error " + err);
       }
