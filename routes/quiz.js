@@ -25,6 +25,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/list", async (req, res) => {
+  let obj;
+  try {
+    const quiz = await Quiz.find().select({ Questions: 0 });
+    if (quiz.length > 0) {
+      try {
+        for (let n = 0; n < quiz.length; n++) {
+          const instituteName = await Institute.findById(
+            quiz[n].InstituteID
+          ).select({ name: 1, _id: 0 });
+          obj = Object.assign({}, quiz[n].toObject());
+          obj["instituteName"] = instituteName["name"];
+        }
+        console.log(obj);
+        res.json(obj);
+      } catch (err) {
+        res.send("Error " + err);
+      }
+    } else {
+      console.log("No quiz found");
+      res.json([false]);
+    }
+  } catch (err) {
+    res.send("Error " + err);
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     const quiz = await Quiz.findById(req.params.id);
