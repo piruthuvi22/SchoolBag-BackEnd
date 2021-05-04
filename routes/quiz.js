@@ -14,7 +14,12 @@ const upload = require("../multer-engine/engine");
 router.get("/", async (req, res) => {
   try {
     const quiz = await Quiz.find();
-    res.json(quiz);
+    if (quiz.length > 0) {
+      res.json(quiz);
+    } else {
+      console.log("No quiz found");
+      res.json([false]);
+    }
   } catch (err) {
     res.send("Error " + err);
   }
