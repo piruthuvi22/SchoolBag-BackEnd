@@ -40,7 +40,7 @@ router.get("/list", async (req, res) => {
           obj["instituteName"] = instituteName["name"];
           data.push(obj);
         }
-        console.log(data);
+        // console.log(data);
         res.json(data);
       } catch (err) {
         res.send("Error " + err);
@@ -55,9 +55,21 @@ router.get("/list", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  let obj;
   try {
     const quiz = await Quiz.findById(req.params.id);
-    res.json(quiz);
+    try {
+      const instituteName = await Institute.findById(quiz.InstituteID).select({
+        name: 1,
+        _id: 0,
+      });
+      obj = Object.assign({}, quiz.toObject());
+      obj["instituteName"] = instituteName["name"];
+      console.log(obj);
+      res.json(obj);
+    } catch (err) {
+      res.send("Error " + err);
+    }
   } catch (err) {
     res.send("Error " + err);
   }
