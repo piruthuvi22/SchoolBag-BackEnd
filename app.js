@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const mongoConnectionString = process.env.DB_URI;
-// const mongoConnectionString =
-//   "mongodb+srv://john:john@cluster0.a0fgx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const mongoConnectionString = process.env.DB_URI;
+const mongoConnectionString =
+  "mongodb+srv://john:john@cluster0.a0fgx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+//should change the database name
 const bodyparser = require("body-parser");
 const cors = require("cors");
 
@@ -28,6 +29,7 @@ con.on("open", () => {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 const instituteRouter = require("./routes/institute");
 const subjectRouter = require("./routes/subject");

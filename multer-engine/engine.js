@@ -6,7 +6,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     let ext = file.originalname.split(".").pop();
-    cb(null, "img" + "-" + Date.now() + "." + ext);
+    cb(null, "question" + "-" + Date.now() + "." + ext);
   },
 });
 

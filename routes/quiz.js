@@ -2,7 +2,7 @@ const { response } = require("express");
 const express = require("express");
 const fs = require("fs");
 const { promisify } = require("util");
-
+const configApi = require("../config.json");
 const unlinkAsync = promisify(fs.unlink);
 var ObjectId = require("mongodb").ObjectId;
 
@@ -114,14 +114,14 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.patch("/:id", upload.single("myFile"), async (req, res) => {
+router.patch("/:id", upload.single("questionImg"), async (req, res) => {
   //Getting the answers and Making it as arrays
   let answersReceived = req.body.answers;
   let answersToAdd = answersReceived.split(",,");
 
   if (req.file !== undefined) {
     console.log(req.file);
-    const path = req.file.path;
+    const path = configApi.BaseApi + req.file.path;
     //Create the Question object
     let newQuestion = {
       Question: req.body.question,
