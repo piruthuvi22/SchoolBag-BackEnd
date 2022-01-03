@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const institute = await Institute.findById(req.params.id);
-    res.json(institute);
+    res.json(institute.name);
   } catch (err) {
     res.send("Error " + err);
   }
