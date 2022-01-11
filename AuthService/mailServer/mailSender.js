@@ -41,9 +41,9 @@ const sendVerificationEmail = async (emailAddress, name, activationCode) => {
     // const accessToken = await OauthClient.getAccessToken();
 
     const mailOptions = {
-      from: "BUILD WITH <info@schoolbag.pro>",
+      from: "School Bag <info@schoolbag.pro>",
       to: emailAddress,
-      subject: "Verification BUILD WITH",
+      subject: "Verification School Bag",
       html: VerificationEmailTemplate(name, activationCode),
     };
 
@@ -64,9 +64,9 @@ const sendResetEmail = async (emailAddress, name, resetCode) => {
     // const accessToken = await OauthClient.getAccessToken();
 
     const mailOptions = {
-      from: "BUILD WITH <info@schoolbag.pro>",
+      from: "School Bag <info@schoolbag.pro>",
       to: emailAddress,
-      subject: "Reset Password BUILD WITH",
+      subject: "Reset Password School Bag",
       html: ResetEmailTemplate(name, resetCode),
     };
 

@@ -110,8 +110,9 @@ exports.get_all_quiz =  async (req, res) => {
 
   exports.create_questions =  async (req, res) => {
     //Getting the answers and Making it as arrays
-    let answersReceived = req.body.answers;
-    let answersToAdd = answersReceived.split(",,");
+   // let answersReceived = req.body.answers;
+    // let answersToAdd = answersReceived.split(",,");
+    console.log(req.body)
   
     if (req.file !== undefined) {
       let imgInfo =await cloudinary.uploader
@@ -123,11 +124,11 @@ exports.get_all_quiz =  async (req, res) => {
       //Create the Question object
       let newQuestion = {
         Question: req.body.question,
-        Answers: answersToAdd,
+        Answers: req.body.answers,
         CorrectAnswer: req.body.correctAnswer,
         Path: imgInfo,
       };
-  
+      console.log(newQuestion.Answers);
       try {
         const i = ExamPaper.updateOne(
           { _id: req.params.id }, // wrap in ObjectID },
@@ -143,7 +144,7 @@ exports.get_all_quiz =  async (req, res) => {
       //Create the Question object
       let newQuestion = {
         Question: req.body.question,
-        Answers: answersToAdd,
+        Answers: req.body.answers,
         CorrectAnswer: req.body.correctAnswer,
       };
   

@@ -28,7 +28,9 @@ exports.create_institute =  async (req, res) => {
       city: req.body.city,
       phoneNo: req.body.phoneNo,
     });
+    console.log(institute);
       //upload cloudinary
+      if (req.file !== undefined) {
       let imgInfo =await cloudinary.uploader
       .upload(req.file.path, {
           use_filename: true,
@@ -42,6 +44,10 @@ exports.create_institute =  async (req, res) => {
       res.json(a1);
     } catch (err) {
       res.send(err);
+    }
+    }else{
+      const a1 = await institute.save();
+      res.json(a1);
     }
   };
 
